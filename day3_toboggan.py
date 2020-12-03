@@ -1,5 +1,5 @@
 import re 
-
+product = 1
 
 def open_file():
   #going to open file and clean up data
@@ -10,30 +10,48 @@ def open_file():
     #print(scrubbed)
     return scrubbed
 
-def move_toboggan(right, file):
+def move_toboggan(right, down, file):
   #takes number of spaces to move right per line
   #then checks for collision with tree (marked as '#')
   index = 0
   collisions = 0
-  skip_first = 0
+  line_count = 0
+  
   
   for line in file:
     #increment index by number of spaces right per iteration
    
-    if skip_first == 0:
-      skip_first += 1
+    if line_count == 0:
+      line_count += 1
       index += right
-    else:
+      #print(line)
+    elif line_count % down == 0:
       #there are 31 characters per line, find modulo when it wraps.
       position = (index % 31) 
       #print(f'position = {position}')
       #print(line)
       index += right
+      line_count += 1
       if line[position] == '#':
         collisions += 1
-        #print(f'collision detected on line {skip_first}, position {position}')
+        #print(f'collision detected on line {line_count}, position {position}')
+    else:
+      line_count += 1
+      #print(line)
+      continue
+    
+  return collisions 
+    
+#print(move_toboggan(1, 1, open_file()))
+#print(move_toboggan(3, 1, open_file()))
+#print(move_toboggan(5, 1, open_file()))
+#print(move_toboggan(7, 1, open_file()))
+#print(move_toboggan(1, 2, open_file()))
 
-    
-  print(collisions) 
-    
-move_toboggan(3, open_file())
+product *= move_toboggan(1, 1, open_file())
+product *= move_toboggan(3, 1, open_file())
+product *= move_toboggan(5, 1, open_file())
+product *= move_toboggan(7, 1, open_file())
+product *= move_toboggan(1, 2, open_file())
+
+print(f'product of all is {product}') 
