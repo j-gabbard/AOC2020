@@ -38,11 +38,11 @@ def password_check(passwords):
   for line in passwords:
     character_counter = 0
     #quantity is last part of line
-    quantity = line.split()[0]
+    quantity = line.split()[0].split('-')
     
-    quantity_list = quantity.split('-')
-    quantity_low = int(quantity_list[0])
-    quantity_high = int(quantity_list[1]) + 1
+    #quantity_list = quantity.split('-')
+    quantity_low = int(quantity[0])
+    quantity_high = int(quantity[1]) + 1
     
     #print(quantity)
     #print(quantity_low)
