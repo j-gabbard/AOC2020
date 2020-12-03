@@ -37,10 +37,10 @@ def password_check(passwords):
   line_counter = 0
   for line in passwords:
     character_counter = 0
-    #quantity is last part of line
+    #quantity is first part of line so easy to split
     quantity = line.split()[0].split('-')
     
-    #quantity_list = quantity.split('-')
+    #get low/high for range(), remembering that upper range is not inclusive
     quantity_low = int(quantity[0])
     quantity_high = int(quantity[1]) + 1
     
@@ -48,9 +48,10 @@ def password_check(passwords):
     #print(quantity_low)
     #print(quantity_high) 
     
+    #need to get the character to match on and the password. Could have done 
+    #split[1] but then have to clean up colon. Lookahead avoids this. 
     character = re.search('[a-z](?=[:])', line).group()
     password = line.split()[-1]
-    regex = character + '{' + f'{quantity}' + '}' 
     
     for letter in password:
       if letter == character:
@@ -61,4 +62,56 @@ def password_check(passwords):
 
   print(line_counter)   
   
-password_check(open_file())
+#password_check(open_file())
+
+def password_check_v2(passwords):
+  # given an input, make sure the character appears in exactly the low or
+  # in the high quantity postion, not both. Search should find the nth
+  # character, not index (no 0th character)
+  
+  line_counter = 0
+  for line in passwords:
+    character_counter = 0
+    #quantity is first part of line so easy to split
+    quantity = line.split()[0].split('-')
+    #print(quantity)
+
+    #need to get the character to match on and the password. Could have done 
+    #split[1] but then have to clean up colon. Lookahead avoids this. 
+    character = re.search('[a-z](?=[:])', line).group()
+    password = line.split()[-1]
+    
+    #get low/high values, remembering to add 1 to both for 
+    #index to character conversion - nth character is n-1 index
+    
+    position_low = int(quantity[0]) - 1
+    position_high = int(quantity[1]) - 1
+    flag = 0
+    
+    #print(character)
+    #print(position_low)
+    #print(position_high)
+    
+    try:
+      if password[position_low] == character:
+        flag += 1
+    except IndexError:
+      pass
+    
+    #print(flag)
+    
+    try:
+      if password[position_high] == character:
+        flag += 1
+    except IndexError:
+      pass
+      
+    #print(flag)
+      
+    #checking to make sure both weren't true
+    if flag == 1:
+      line_counter += 1
+
+  print(line_counter)  
+
+password_check_v2(open_file())
