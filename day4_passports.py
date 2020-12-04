@@ -6,13 +6,9 @@ def open_file():
     scrubbed = []
     lines = f.readlines()
     scrubbed = ' '.join([line.strip() for line in lines]).replace('  ', '\n')
-    
-    #for line in f:
-     # scrubbed.append(line.strip())
-    #print(scrubbed)
+
     return scrubbed
 
-#open_file()
 
 def check_passports(passports):
   #takes list of passports with values assigned as key:value and determines
@@ -26,9 +22,7 @@ def check_passports(passports):
     for field in fields:
       if re.search(field, passport):
         flag += 1 #increment flag for each valid key, 7 valid means valid passport
-        #print(re.search(field,passport).group())
-        #print(f'flag = {flag}')
-      #print(flag)
+
       
     if flag == 7:
       sub_flag = 0
@@ -40,7 +34,6 @@ def check_passports(passports):
       ecl_check = re.search(r'ecl:[a-z]{3}\b', passport)
       pid_check = re.search(r'pid:[0-9]{9}\b', passport)
       
-      #print(hgt_check)
       if byr_check and iyr_check and eyr_check and hcl_check and ecl_check and pid_check and hgt_check:
         if int(byr_check.group().split(':')[1]) >= 1920 and int(byr_check.group().split(':')[1]) <= 2002:
           sub_flag += 1
