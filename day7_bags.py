@@ -1,6 +1,5 @@
 import re 
-valid = 0
-valid_list = ['shiny gold']
+valid_list = ['1 shiny gold']
 bags = []
 bag_dict = {}
 
@@ -24,13 +23,13 @@ def generate_list(data):
     inner1 = bag.split('contain')[1]
     
     outer1 = re.sub(r'bags', '', outer1).strip()
-    
+    inner1 = re.sub(r'(\sbag[s]?|\.$)', '', inner1).strip()
+
     outer.append(outer1)
     inner.append(inner1)
   
   bag_dict = dict(zip(outer, inner))
-  #for k, v in bag_dict.items():
-    #print(k, v)
+
  
 
 def find_outers(colors):
@@ -40,29 +39,48 @@ def find_outers(colors):
   done_check = len(valid_list)
   
   for k, v in bag_dict.items():
-    #print(f'colors = {colors}, k = {k}, v = {k}')
-    #hold_up = input()
     for color in colors:
       if color in v:
-        #print(f'color = {color}, k = {k}, v = {v}')
-        #hold_up = input()
-        #temp_colors = re.sub(r'[0-9]\s', '', v).strip()
         valid_list.append(k)
+        #can't delete entry during recursion; set value to null
         bag_dict[k] = ''
-        #print(k, v)
-  
-  #print(valid_list)
-  #hold_up = input()
+
   
   if done_check != len(valid_list):
     #sorted_list = sorted(
-    print(sorted(list(set(valid_list))))
-    hold_up = input()
+    #print(sorted(list(set(valid_list))))
+    #hold_up = input()
     find_outers(valid_list)
   else:
-    print(f'hopefully the total count is {len(set(valid_list))}')
-
-    
+    print(f'hopefully the total count is {len(set(valid_list)) -1}')
 
 generate_list(open_file())
-find_outers(valid_list)
+
+def part2(colors):
+  #this forms and loops through a queue, but recursion is hard and this doesn't work. 
+  global valid_list
+  global bag_dict
+  calculation = ''
+  
+  while valid_list:
+    temp = valid_list.pop(0)
+    qty, color = temp.split(' ', 1)
+    
+    #print(qty, color)
+    for k, v in bag_dict.items():
+      if color in k:
+        if 'no other' in v:
+          calculation += ')'
+          continue
+        else:
+          calculation += f'{qty}(' 
+          for x in v.split(', '):
+            valid_list.append(x)
+            
+      
+  
+  print(calculation)
+  
+part2(valid_list)
+
+
