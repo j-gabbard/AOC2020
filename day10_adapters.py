@@ -64,6 +64,31 @@ part2(open_file())
 6, 7, 10
 6, 8, 10  
 
+if two numbers separated by 5 (like: 1, 2, 3, 4, 5, 6)
+1, 2, 3, 4, 5, 6
++ 4 combinations removing any one
++ 6 combinations removing any two
+1, 3, 6
+1, 4, 6
+
+= 13 total combinations
+
+if two numbers separated by 6 (like: 1, 2, 3, 4, 5, 6, 7)
+1, 2, 3, 4, 5, 6, 7
++ 5 combinations removing any 1
++ 12 combinations removing any 2
+1, 4, 5, 7
+1, 4, 6, 7
+1, 2, 4, 7
+1, 2, 5, 7
+1, 3, 4, 7
+1, 3, 5, 7
+1, 3, 6, 7
+1, 4, 7
+= 26 total combinations
+
+1, 2, 4, 7, 13, 26
+
 If 3 intermediates, there are 7 combinations. Would be 2 ** 3 but one is necessary to keep distance <= 3. 
 If 2 intermediates, there are 2 ** 2 combinations
 If 1 intermediate, there are 2 ** 1 combinations
