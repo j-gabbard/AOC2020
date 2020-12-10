@@ -6,9 +6,6 @@ def open_file():
   with open('./inputs/day9.txt', 'r') as f:
     text = f.readlines()
     scrubbed = [int(x.strip()) for x in text]
-    #for line in f:
-      #scrubbed.append(line.strip())
-    #print(scrubbed)
     return scrubbed
 
 
@@ -16,31 +13,34 @@ def part1(inp):
   
   while inp:
     flag = 0
-    sliced = inp[:26]
+    #get first 26 entries. The rest don't matter for this iteration
+    sliced = inp[:26] 
     counter = 0
-    for number in sliced:
-      #print(number)
-      #print(sliced)
-      #print(sliced[25])
-      
-      #x = input()     
+    
+    for number in sliced:     
+      #look in list for the other addend that makes 26th number
+      #if it exists, pop first number and do it again
       if sliced[25] - number in sliced: 
-        flag = 1
+        #flag = 1
         inp.pop(0)
-      
-      if flag == 1:
         part1(inp)
+
+      
+      #if flag == 1:
       
       else:
         counter += 1
         if counter >= 24:
-          print(f'might be a prob with {inp[25]}')
-
+          return(f'might be a prob with {inp[25]}')
+          exit()
         
         
-#part1(open_file())
+print(part1(open_file()))
 
-def part2(inp):
+def part2(inp, target):
+  #find contiguous range that adds to the number from part 1
+  #returns the sum of smallest and largest numbers in that range
+  
   total, counter, first, smallest, largest = 0, 0, 0, 0, 0
 
   
@@ -50,26 +50,27 @@ def part2(inp):
     
     total += number
     counter += 1
+    
     if number > largest:
       largest = number
     
     if smallest == 0:
       smallest = number
       
-    if number < smallest:
+    if number < smallest or smallest == 0:
       smallest = number
     
-    if total > 32321523:
-    #if total > 127:
+    #total > target means no need to continue since no negative numbers. 
+    #pop first value and start over. 
+    if total > target:
       inp.pop(0)
-      part2(inp)
+      part2(inp, target)    
     
-    
-    if total == 32321523 and counter > 1:
-    #if total == 127 and counter > 1:
-      print(f'first = {first}, last = {number}')
-      print(f'smallest = {smallest}, largest = {largest}')
+    if total == target and counter > 1:
+      #print(f'first = {first}, last = {number}')
+      #print(f'smallest = {smallest}, largest = {largest}')
       print(f'sum = {smallest + largest}')
+      exit()
       
-part2(open_file())
+part2(open_file(), 32321523)
     
