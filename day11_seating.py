@@ -39,8 +39,6 @@ def get_neighbors(y, x):
 
   return neighbors
   
-#print(get_neighbors(0, 3, open_file()))
-
 def generate_after():
   global current
   global after
@@ -52,8 +50,6 @@ def generate_after():
     queue = ''
     
     for seat in row:
-      #print(row_counter, seat_counter)
-      #hold_on = input()
       if seat == 'L' and get_neighbors(row_counter, seat_counter) == 0:
         queue += '#'
      
@@ -128,8 +124,6 @@ def get_neighbors2(y, x):
   
 
   for i in reversed(row[:x]):
-    print(f'reversed row{i}')
-    #hold_up = input()
     if i != '.':  
         if i == '#':
           flags[1] = 1
@@ -144,10 +138,7 @@ def get_neighbors2(y, x):
           neighbors += 1
         break
         
-
   for i in reversed(column[:y]):
-    print(f'reversed column{i}')
-    #hold_up = input()
     if i != '.':  
         if i == '#':
           flags[3] = 1
@@ -169,15 +160,7 @@ def get_neighbors2(y, x):
           neighbors += 1
         break
   
-  print(f'row = {row}\n',
-    f'column = {column}\n',
-    f'diag1 = {diag1}\n',
-    f'diag2 = {diag2}\n',
-    f'diag3 = {diag3}\n',
-    f'diag4 = {diag4}\n'
-    )
-  print(neighbors)
-  print(flags.items())
+
   return neighbors
   
 def generate_after2():
@@ -191,14 +174,9 @@ def generate_after2():
     queue = ''
     
     for seat in row:
-      print(row_counter, seat_counter, seat)
-      #hold_on = input()
-      #print(get_neighbors2(row_counter, seat_counter))
-      #hold_on = input()
       if seat == 'L' and get_neighbors2(row_counter, seat_counter) == 0:
         queue += '#'
-     
-      
+       
       elif seat == '#' and get_neighbors2(row_counter, seat_counter) >= 5:
         queue += 'L'
       
@@ -215,8 +193,6 @@ def count_final2():
   global counter
   
   generate_after2()
-  print([row for row in after])
-  hold_on = input()
   if current != after:
     current = after
     counter += 1
