@@ -1,4 +1,4 @@
-import itertools
+import time
 current = []
 after = []
 counter = 0
@@ -73,7 +73,7 @@ def count_final():
   if current != after:
     current = after
     counter += 1
-    print(f'iterations = {counter}')
+    #print(f'iterations = {counter}')
     count_final()
   
   else:
@@ -196,11 +196,18 @@ def count_final2():
   if current != after:
     current = after
     counter += 1
-    print(f'iterations = {counter}')
+    #print(f'iterations = {counter}')
     count_final2()
   
   else:
     print(sum([row.count('#') for row in after]))
     print('program over')
-    
+
+t = time.time()
+count_final()   
+current = open_file()
+after = [] 
+print(time.time()-t)
+t = time.time()
 count_final2()
+print(time.time()-t)
