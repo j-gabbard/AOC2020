@@ -71,11 +71,11 @@ def peer_into_future(cycles):
         staten1[cell] = 1 #cell revives if exactly 3 neighbors
         total += 1
         
-      elifnei != 3 and staten[cell] ==0:
+      elif nei != 3 and staten[cell] ==0:
         staten1[cell] = 0 #cell stays dead if not 3 neighbors
         
     counter += 1
-        staten = staten1
+    staten = staten1
     del staten1
     
     print(f'cycles done: {counter}, total = {total}')
